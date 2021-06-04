@@ -25,3 +25,5 @@ JuD是一款自动化扫描器，其功能主要是遍历所有子域名、及�
 
 ### 项目使用
 项目是在Linux下开发的，请在Linux环境下使用。<br />rad扫描器是基于Chrome浏览器的，请先安装Chrome浏览器。<br />接着将Oneforall工具放入Tools文件夹,并且安装好相应的Python库。<br />全部安装完毕之后：<br />将目标填入 `target.txt` <br />启用命令：`sudo python3 JuD.py` <br />可使用单个模块或者使用全自动模式。
+
+## 有问题请在Issues中反馈
