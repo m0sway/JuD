@@ -1,9 +1,9 @@
 # Server酱sckey
-sckey = ''
+sckey = 'SCT30754TezYn04Zt9z1H9SiohYUOYX4s'
 #延时
 server_sleep_time = 60
 # 目标文件位置
-target_path = 'target.txt'
+target_path = './target.txt'
 # OneForAll相关配置
 oneforall_path = './Tools/OneForAll/oneforall.py'
 #数据库相关配置

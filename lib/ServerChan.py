@@ -13,7 +13,16 @@ def subdomain_status_push():
     sql_connect.subdomain_sql_check()
     sql_connect.vuln_sql_check()
     sql_connect.ip_sql_check()
-    sql_connect.insert_subdomain_sql(sql_connect.oneforall_results_sql())
+    url_result = []
+    for i in sql_connect.oneforall_results_sql():
+        if i != None:
+            if i in url_result:
+                pass
+            else:
+                url_result.append(i)
+        else:
+            pass
+    sql_connect.insert_subdomain_sql(url_result)
     subdomain_num = len(sql_connect.read_subdomain_sql())
     content = """``` 子域收集完成```
     #### 结果:  共收集到了{subdomain_num}个子域
