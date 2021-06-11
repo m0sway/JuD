@@ -25,10 +25,14 @@ JuD是一款自动化扫描器，其功能主要是遍历所有子域名、及�
 后续还会加入FOFA的调用、dirsearch扫描目录等，优化代码，兼容Windows。<br />
 
 ### 项目使用
-项目是在Linux下开发的，请在Linux环境下使用。<br />rad扫描器是基于Chrome浏览器的，请先安装Chrome浏览器(若使用的时候报Chrome相关错误，打开Chrome的文件注释掉最后一行即可)。<br />接着将自己的Oneforall、Xray工具放入Tools中对应的文件夹(文件夹已经创建，将文件放入即可，不要套娃)<br />安装Oneforall所需Python库<br />配置文件在lib下的config.py,填入自己的server酱的key，其他相关配置也可做相应的更改。<br />全部安装完毕之后：<br />将目标填入 `target.txt` <br />启用命令： `sudo python3 JuD.py`  <br />可使用单个模块或者使用全自动模式。
+项目是在Linux下开发的，请在Linux环境下使用。<br />rad扫描器是基于Chrome浏览器的，请先安装Chrome浏览器(若使用的时候报Chrome相关错误，打开Chrome的文件注释掉最后一行即可)。<br />接着将自己的Oneforall、Xray工具放入Tools中对应的文件夹(文件夹已经创建，将文件放入即可，不要套娃)<br />安装Oneforall所需Python库<br />配置文件在lib下的config.py,填入自己的server酱的key，其他相关配置也可做相应的更改。<br />全部安装完毕之后：<br />将目标填入 `target.txt` ,若是从ip开始扫描将目标填入 `ip.txt` ，若是直接扫描web将目标填入 `task.txt` <br />启用命令： `sudo python3 JuD.py`  <br />可使用单个模块或者使用全自动模式。<br />扫描结果保存在results目录下，每次的扫描结果都会根据时间戳重命名。<br />结束时一定要使用工具中的退出选项，否则下次运行时会报错。
 
 ## 如有问题请提交Issues
 
 ### 2021/6/10 更新
 > 更新了IP_SCAN表和TASK表的数据去重，避免多次扫描同一目标。
 > 在全自动模式下注释了WAF判断(单模块依旧可以使用)。代码做了一些小优化。
+
+### 2021/6/11 更新
+>新增了从IP开始全自动扫描
+>新增了从TASK开始全自动扫描

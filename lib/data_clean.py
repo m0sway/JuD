@@ -4,8 +4,6 @@ from rich.console import Console
 
 console = Console()
 
-conn = sqlite3.connect(config.sql_path)
-
 def ip_clean():
     try:
         ip_list = []
@@ -14,16 +12,16 @@ def ip_clean():
             ip_list.append(ip)
 
         ip_set = set(ip_list)
-        ip_list = list(ip_set)
+        ip_list = list(ip_set)*3
 
         ip_conn = sqlite3.connect(config.sql_path)
         ip_sql = ip_conn.cursor()
         ip_sql.execute("DELETE FROM IP_SCAN")
         ip_conn.commit()
         sql_connect.insert_ip_sql(ip_list)
-        console.print('IP_SCAN表去重成功', style="#ADFF2F")
+        console.print('IP_SCAN表去重自增成功', style="#ADFF2F")
     except:
-        console.print('IP_SCAN表去重失败', style="bold red")
+        console.print('IP_SCAN表去重自增失败', style="bold red")
 
 def task_clean():
     try:

@@ -3,7 +3,7 @@ import os
 import time
 from rich.console import Console
 from rich.table import Column, Table
-from lib import config,check_cdn,port_check,read_target,rad_to_xray,ServerChan,sql_connect,subdomain_scan,waf_check,data_clean
+from lib import config,check_cdn,port_check,read_target,rad_to_xray,ServerChan,sql_connect,subdomain_scan,waf_check,data_clean,insert
 
 
 console = Console()
@@ -51,7 +51,17 @@ def banner():
     help_table.add_row(
     "5",
     "attack",
-    "全自动"
+    "(子域收集开始)全自动"
+    )
+    help_table.add_row(
+    "6",
+    "attack",
+    "(IP插入开始)全自动"
+    )
+    help_table.add_row(
+    "7",
+    "attack",
+    "(TASK插入开始)全自动"
     )
     help_table.add_row(
     "0",
@@ -70,7 +80,7 @@ def end():
 def main():
     banner()
     while True:
-        console.print('请输入要执行的参数ID：[bold cyan]0-5[/bold cyan]', style="#ADFF2F")
+        console.print('请输入要执行的参数ID：[bold cyan]0-7[/bold cyan]', style="#ADFF2F")
         args = input('> ')
         if args == '1':
             subdomain_scan.oneforall_scan(config.target_path)
@@ -98,6 +108,26 @@ def main():
             data_clean.task_clean()
             os.system("nohup sudo python3 webhook.py > logs/webhook.log 2>&1 &")
             os.system("nohup ./Tools/xray/xray_linux_amd64 webscan --listen 127.0.0.1:23333 --html-output ./results/xray.html --webhook-output http://127.0.0.1:2333/webhook > logs/xray.log 2>&1 &")
+            time.sleep(5)
+            rad_to_xray.rad_to_xray(sql_connect.read_task_sql())
+        elif args == '6':
+            insert.ip_insert()
+            port_check.subdomain_port_check(sql_connect.read_subdomain_sql())
+            data_clean.ip_clean()
+            for domain in sql_connect.read_ip_sql():
+                port_check.masscan_port_check(domain[1])
+            # waf_check.waf_check(sql_connect.read_task_sql())
+            data_clean.task_clean()
+            os.system("nohup sudo python3 webhook.py > logs/webhook.log 2>&1 &")
+            os.system("nohup ./Tools/xray/xray_linux_amd64 webscan --listen 127.0.0.1:23333 --html-output ./results/xray.html --webhook-output http://127.0.0.1:2333/webhook > logs/xray.log 2>&1 &")
+            time.sleep(5)
+            rad_to_xray.rad_to_xray(sql_connect.read_task_sql())
+        elif args == '7':
+            insert.task_insert()
+            # waf_check.waf_check(sql_connect.read_task_sql())
+            data_clean.task_clean()
+            os.system("nohup ./Tools/xray/xray_linux_amd64 webscan --listen 127.0.0.1:23333 --html-output ./results/xray.html --webhook-output http://127.0.0.1:2333/webhook > logs/xray.log 2>&1 &")
+            os.system("nohup sudo python3 webhook.py > logs/webhook.log 2>&1 &")
             time.sleep(5)
             rad_to_xray.rad_to_xray(sql_connect.read_task_sql())
         elif args == '0':
